@@ -35,9 +35,16 @@ function tableToArray(table) {
 
 const getBreeds = async () => {
   try {
-
-    const response = await instance.get('http://www.fundamentus.com.br/resultado.php', {headers : {'X-Requested-With': 'XMLHttpRequest'} });
- 
+    // instance.get('http://www.fundamentus.com.br/resultado.php', {headers : {'X-Requested-With': 'XMLHttpRequest'} });
+    const response = await   axios.request ({
+      url: 'http://www.fundamentus.com.br/resultado.php',
+      method: 'get',
+  
+      withCredentials: true,
+      headers: {'X-Requested-With': 'XMLHttpRequest'},
+  
+      // ... and other options 
+  })
     const dom = new JSDOM(response.data);
     //let dom =  await JSDOM.fromURL("http://www.fundamentus.com.br/resultado.php");
     
