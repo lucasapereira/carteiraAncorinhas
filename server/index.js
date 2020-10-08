@@ -8,6 +8,10 @@ const PORT = process.env.PORT || 5000;
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
+const instance = axios.create({
+  withCredentials: true
+})
+
 
 function tableToArray(table) {
   var result = []
@@ -32,10 +36,14 @@ function tableToArray(table) {
 const getBreeds = async () => {
   try {
 
-    let dom =  await JSDOM.fromURL("http://www.fundamentus.com.br/resultado.php");
-
+    const response = await axios.get('http://www.fundamentus.com.br/resultado.php', {headers : {'X-Requested-With': 'XMLHttpRequest'} });
+ 
+    const dom = new JSDOM(response.data);
+    //let dom =  await JSDOM.fromURL("http://www.fundamentus.com.br/resultado.php");
+    
     const document = dom.window.document;
     const table = document.getElementById("resultado");
+    console.log(table.innerHTML);
 return tableToArray(table)
 console.log(tableToArray(table))
 
