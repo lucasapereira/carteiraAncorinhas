@@ -36,7 +36,7 @@ function tableToArray(table) {
 const getBreeds = async () => {
   try {
 
-    const response = await axios.get('http://www.fundamentus.com.br/resultado.php', {headers : {'X-Requested-With': 'XMLHttpRequest'} });
+    const response = await instance.get('http://www.fundamentus.com.br/resultado.php', {headers : {'X-Requested-With': 'XMLHttpRequest'} });
  
     const dom = new JSDOM(response.data);
     //let dom =  await JSDOM.fromURL("http://www.fundamentus.com.br/resultado.php");
