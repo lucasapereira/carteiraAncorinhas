@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
 
 function App() {
   const [message, setMessage] = useState(null);
-  const [isFetching, setIsFetching] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
   const [url, setUrl] = useState('/api');
 
   const fetchData = useCallback(() => {
@@ -13,10 +13,12 @@ function App() {
         if (!response.ok) {
           throw new Error(`status ${response.status}`);
         }
+
+        console.log(response);
         return response.json();
       })
       .then(json => {
-        setMessage(json.message);
+        setMessage(json);
         setIsFetching(false);
       }).catch(e => {
         setMessage(`API call failed: ${e}`);
@@ -29,38 +31,38 @@ function App() {
     fetchData();
   }, [fetchData]);
 
+
+  const printMessage = () => {
+
+
+    if(!isFetching){
+      console.log(message)
+
+      return(
+        <table>
+        {message.map(row => (
+          <tr key={row[0]}>
+             <td>{row[0]}</td>
+            <td>{row[1]}</td>
+            <td>{row[2]}</td>
+            <td>{row[3]}</td>
+          </tr>
+        ))}
+        </table>
+      )
+    }
+    
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        { process.env.NODE_ENV === 'production' ?
-            <p>
-              This is a production build from create-react-app.
-            </p>
-          : <p>
-              Edit <code>src/App.js</code> and save to reload.
-            </p>
-        }
-        <p>{'« '}<strong>
+ 
+      
+
           {isFetching
             ? 'Fetching message from API'
-            : message}
-        </strong>{' »'}</p>
-        <p><a
-          className="App-link"
-          href="https://github.com/mars/heroku-cra-node"
-        >
-          React + Node deployment on Heroku
-        </a></p>
-        <p><a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a></p>
-      </header>
+            : printMessage()}
+     
     </div>
   );
 
