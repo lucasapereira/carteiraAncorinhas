@@ -37,9 +37,9 @@ const getBreeds = async () => {
   try {
     // instance.get('http://www.fundamentus.com.br/resultado.php', {headers : {'X-Requested-With': 'XMLHttpRequest'} });
     const response = await   axios.request ({
-      url: 'http://www.fundamentus.com.br/resultado.php',
+      url: '/resultado.php',
       method: 'get',
-  
+      baseURL: 'http://www.fundamentus.com.br',
       withCredentials: true,
       headers: {'X-Requested-With': 'XMLHttpRequest'},
   
